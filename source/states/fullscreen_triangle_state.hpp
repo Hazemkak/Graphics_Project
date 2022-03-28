@@ -16,6 +16,7 @@ class FullscreenTriangleState: public our::State {
     
     our::ShaderProgram program;
     //TODO: Add a variable in which we will store the name (ID) for a vertex array
+    // defining the vertex array
     GLuint vertexArray;
 
     // onInitialize() function is called once before the state starts
@@ -56,8 +57,8 @@ class FullscreenTriangleState: public our::State {
         }
 
         //TODO: Create a vertex Array
+        // generating the Vertex array and pass the defined vertexArray GLuint declared above
         glGenVertexArrays(1,&vertexArray);
-        //glGenVertexArrays(1,&vertexArray)
 
         // We set the clear color to be black
         glClearColor(0.0, 0.0, 0.0, 1.0);
@@ -70,6 +71,7 @@ class FullscreenTriangleState: public our::State {
 
 
         //TODO: Draw a triangle using the vertex array and the program
+        // We bind the vertexArray & then say to the program that we are going to draw Triangles
         glBindVertexArray(vertexArray);
         glDrawArrays(GL_TRIANGLES, 0, 3);
         
@@ -78,6 +80,7 @@ class FullscreenTriangleState: public our::State {
     // onInitialize() function is called once after the state ends
     void onDestroy() override {
         //TODO: Delete the vertex Array
+        // Deleting the Vertex array on Destroying the program
         glDeleteVertexArrays(1,&vertexArray);
     }
 };
