@@ -5,17 +5,6 @@
 #include <fstream>
 #include <string>
 
-void our::ShaderProgram::create() {
-    //Create Shader Program
-    program = glCreateProgram();
-}
-
-void our::ShaderProgram::destroy() {
-    //Delete Shader Program
-    if(program != 0) glDeleteProgram(program);
-    program = 0;
-}
-
 //Forward definition for error checking functions
 std::string checkForShaderCompilationErrors(GLuint shader);
 std::string checkForLinkingErrors(GLuint program);
@@ -33,11 +22,10 @@ bool our::ShaderProgram::attach(const std::string &filename, GLenum type) const 
 
     GLuint shaderID = glCreateShader(type);
 
-    //TODO: send the source code to the shader and compile it
-
+    // send the source code to the shader and compile it
+    glShaderSource(shaderID, 1, &sourceCStr, nullptr);
+    glCompileShader(shaderID);
     
-    // Here we check for compilation errors
-    //TODO: Uncomment this if block
     if(std::string error = checkForShaderCompilationErrors(shaderID); error.size() != 0){
         std::cerr << "ERROR IN " << filename << std::endl;
         std::cerr << error << std::endl;
@@ -46,30 +34,8 @@ bool our::ShaderProgram::attach(const std::string &filename, GLenum type) const 
     }
 
     
-    //TODO: attach the shader to the program then delete the shader
-
-    /*glShaderSource --> to get the code from the file .vert as string and put it in the shader object
-    1st parameter : the id of the shader 
-    2nd parameter : the number of  source code strings
-    3rd parameter : array of strings since we have only 1, then send a pointer at it.
-    4th parameter : size of the sting, but the string has a nullptr at the end so its length will be known
-    */
-    glShaderSource(shaderID, 1, &sourceCStr, nullptr);
-    
-    /*glCompileShader --> compile the shader
-    1st parameter : the id of the shader 
-    */
-    glCompileShader(shaderID);
-
-    /*glAttachShader --> attach the shader to the program that will combine the shadders togather
-    1st parameter : the program
-    2nd parameter : the id of the shader
-    */
-    glAttachShader(this->program,shaderID);
-
-    /*glDeleteShader --> delete the shadder as we have attached it to the program already
-    1st parameter : shader ID to be deleted
-    */
+    // attach the shader to the program then delete the shader
+    glAttachShader(program, shaderID);
     glDeleteShader(shaderID);
 
     //We return true since the compilation succeeded
@@ -79,21 +45,14 @@ bool our::ShaderProgram::attach(const std::string &filename, GLenum type) const 
 
 
 bool our::ShaderProgram::link() const {
-    //TODO: call opengl to link the program identified by this->program 
+    // call opengl to link the program identified by this->program 
+    glLinkProgram(program);
 
-    /*glDeleteShader --> this function will link all the shaders that we have attached to the program
-    1st parameter : the program
-    */
-    glLinkProgram(this->program);
-
-    // Here we check for linking errors
-    //TODO: Uncomment this if block
     if(auto error = checkForLinkingErrors(program); error.size() != 0){
         std::cerr << "LINKING ERROR" << std::endl;
         std::cerr << error << std::endl;
         return false;
     }
-
     return true;
 }
 
