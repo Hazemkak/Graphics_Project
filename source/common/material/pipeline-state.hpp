@@ -77,6 +77,8 @@ namespace our {
                 glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
                 // setting the comparison operator of the depth test func
                 glDepthFunc(depthTesting.function); 
+            }else{
+                glDisable(GL_DEPTH_TEST);
             }
 
             // checking face_cull 
@@ -87,6 +89,8 @@ namespace our {
                 glCullFace(faceCulling.culledFace);
                 // in func glFrontFace we choose that we would prefer clockwise faces than counter-clockwise faces "default value GL_CCW"
                 glFrontFace(faceCulling.frontFace);
+            }else{
+                glDisable(GL_CULL_FACE);
             }
 
             //
