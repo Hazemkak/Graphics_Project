@@ -35,7 +35,25 @@ namespace our {
         // - the center position which is the point (0,0,-1) but after being transformed by M
         // - the up direction which is the vector (0,1,0) but after being transformed by M
         // then you can use glm::lookAt
-        return glm::mat4(1.0f);
+
+        // transfrom eye vector by the world transformation matrix
+        glm::vec3 eye=glm::vec3(M* glm::vec4(0,0,0,1)); 
+
+        // transfrom center vector by the world transformation matrix
+        glm::vec3 center=glm::vec(M* glm::vec4(0, 0, -1,1));
+
+        // transfrom up vector by the world transformation matrix
+        glm::vec3 up= glm::vec3(M* glm::vec4(0, 1, 0,1));
+
+        // View Tranfromation matrix
+        glm::mat4 view = glm::lookAt(
+            eye,
+            center,
+            up
+        );
+           
+        return view;
+       
     }
 
     // Creates and returns the camera projection matrix
@@ -46,6 +64,34 @@ namespace our {
         // It takes left, right, bottom, top. Bottom is -orthoHeight/2 and Top is orthoHeight/2.
         // Left and Right are the same but after being multiplied by the aspect ratio
         // For the perspective camera, you can use glm::perspective
-        return glm::mat4(1.0f);
+        
+        glm::mat4 projection;
+
+        // calculating the aspect ratio 
+        float aspect_ratio=(float)viewportSize[0]/viewportSize[1];
+
+
+        if (cameraType==CameraType::ORTHOGRAPHIC) // get the ORTHOGRAPHIC projection matrix 
+        {
+            projection= glm::ortho(
+                -orthoHeight*aspect_ratio/2,
+                orthoHeight*aspect_ratio/2,
+                -orthoHeight/2,
+                orthoHeight/2
+                );
+
+        }else // get the PERSPECTIVE projection matrix
+        {
+            projection = glm::perspective(
+            fovY,
+            aspect_ratio,
+            near,
+            far
+
+        );
+
+        }
+     
+        return projection;
     }
 }

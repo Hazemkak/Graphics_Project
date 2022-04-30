@@ -73,8 +73,7 @@ namespace our {
             // checking depth_testing 
             if(depthTesting.enabled){
                 glEnable(GL_DEPTH_TEST); // disabled by default
-                // we should clear depth buffer every frame to be updated always with the new values in our buffer
-                glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+                
                 // setting the comparison operator of the depth test func
                 glDepthFunc(depthTesting.function); 
             }else{
