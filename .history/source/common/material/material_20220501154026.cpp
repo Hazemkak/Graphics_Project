@@ -53,7 +53,7 @@ namespace our {
         
         //set the uniform value of the alphaThreshold
         shader->set("alphaThreshold",alphaThreshold);
-
+        
         // bind the texture 
         texture->bind();
 

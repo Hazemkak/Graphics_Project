@@ -56,6 +56,7 @@ namespace our {
 
         // bind the texture 
         texture->bind();
+        
 
         //bind the sampler
         sampler->bind(0);

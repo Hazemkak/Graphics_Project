@@ -54,6 +54,11 @@ namespace our {
         //set the uniform value of the alphaThreshold
         shader->set("alphaThreshold",alphaThreshold);
 
+        /*glActiveTexture() --> this function to activate the Texture unit as we have about 32 Unit
+          parameter1 --> the texture unit to be activated 
+        */
+        glActiveTexture(GL_TEXTURE0);
+
         // bind the texture 
         texture->bind();
 
