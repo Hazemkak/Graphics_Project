@@ -137,10 +137,9 @@ namespace our {
 
         //TODO: (Req 8) Modify the following line such that "cameraForward" contains a vector pointing the camera forward direction
         // HINT: See how you wrote the CameraComponent::getViewMatrix, it should help you solve this one
-        // glm::vec3 cameraForward = camera->getViewMatrix()[0]-camera->getViewMatrix()[1];
-        // cameraForward = glm::normalize(cameraForward);
-        glm::vec3 cameraForward = glm::normalize(camera->getViewMatrix()[2]);
-        // cout<<cameraForward[0]<<endl<<cameraForward[1]<<endl<<cameraForward[2]<<endl;
+        glm::vec3 cameraForward = camera->getViewMatrix()[2];
+        // glm::vec3 cameraForward = glm::vec3(camera->getViewMatrix()[0][2],camera->getViewMatrix()[1][2],camera->getViewMatrix()[2][2]);
+
         std::sort(transparentCommands.begin(), transparentCommands.end(), [cameraForward](const RenderCommand& first, const RenderCommand& second){
             //TODO: (Req 8) Finish this function
             // HINT: the following return should return true "first" should be drawn before "second". 
@@ -154,21 +153,8 @@ namespace our {
         });
 
         //TODO: (Req 8) Get the camera ViewProjection matrix and store it in VP
-        
-        glm::mat4 projection = glm::perspective(
-            camera->fovY,
-            windowSize[0]/float(windowSize[1]),
-            camera->near,
-            camera->far
-        );
+        glm::mat4 VP =  camera->getProjectionMatrix(windowSize) * camera->getViewMatrix();
 
-        // float angle=(float)glfwGetTime();
-
-        glm::mat4 model = glm::translate(
-                glm::mat4(1.0f),
-                glm::vec3(0,0,-1)
-            );
-        glm::mat4 VP =  camera->getProjectionMatrix(windowSize) * camera->getViewMatrix()*model;
         //TODO: (Req 8) Set the OpenGL viewport using windowSize
         // making the x,y of glViewport equal to the width and height of the window to take
         // the whole space of the window
@@ -194,7 +180,8 @@ namespace our {
         //TODO: (Req 8) Draw all the opaque commands
         // Don't forget to set the "transform" uniform to be equal the model-view-projection matrix for each render command
         for(int i=0;i<opaqueCommands.size();i++){
-            opaqueCommands[i].material->shader->set("transform",VP);
+            opaqueCommands[i].material->setup();
+            opaqueCommands[i].material->shader->set("transform", VP * opaqueCommands[i].localToWorld);
             opaqueCommands[i].mesh->draw();
         }
         
@@ -223,7 +210,8 @@ namespace our {
         //TODO: (Req 8) Draw all the transparent commands
         // Don't forget to set the "transform" uniform to be equal the model-view-projection matrix for each render command
         for(int i=0;i<transparentCommands.size();i++){
-            transparentCommands[i].material->shader->set("uniform",VP);
+            transparentCommands[i].material->setup();
+            transparentCommands[i].material->shader->set("transform", VP * transparentCommands[i].localToWorld);
             transparentCommands[i].mesh->draw();
         }
         
