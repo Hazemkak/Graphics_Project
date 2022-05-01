@@ -1,6 +1,8 @@
 #include "forward-renderer.hpp"
 #include "../mesh/mesh-utils.hpp"
 #include "../texture/texture-utils.hpp"
+#include <iostream>
+using namespace std;
 
 namespace our {
 
@@ -135,20 +137,49 @@ namespace our {
 
         //TODO: (Req 8) Modify the following line such that "cameraForward" contains a vector pointing the camera forward direction
         // HINT: See how you wrote the CameraComponent::getViewMatrix, it should help you solve this one
-        glm::vec3 cameraForward = glm::vec3(0.0, 0.0, 0.0);
+        // glm::vec3 cameraForward = camera->getViewMatrix()[0]-camera->getViewMatrix()[1];
+        // cameraForward = glm::normalize(cameraForward);
+        glm::vec3 cameraForward = glm::normalize(camera->getViewMatrix()[2]);
+        // cout<<cameraForward[0]<<endl<<cameraForward[1]<<endl<<cameraForward[2]<<endl;
         std::sort(transparentCommands.begin(), transparentCommands.end(), [cameraForward](const RenderCommand& first, const RenderCommand& second){
             //TODO: (Req 8) Finish this function
             // HINT: the following return should return true "first" should be drawn before "second". 
-            return false;
+
+            // what i did is measuring the distance from origin "cam pos" and see which is more far to be drawn first
+            // far should be drawn before near
+            if(sqrt(first.center.x)+sqrt(first.center.y)+sqrt(first.center.z) > sqrt(second.center.x)+sqrt(second.center.y)+sqrt(second.center.z))
+                return true;
+            else
+                return false;
         });
 
         //TODO: (Req 8) Get the camera ViewProjection matrix and store it in VP
-        glm::mat4 VP = glm::mat4(1.0f);
+        
+        glm::mat4 projection = glm::perspective(
+            camera->fovY,
+            windowSize[0]/float(windowSize[1]),
+            camera->near,
+            camera->far
+        );
+
+        // float angle=(float)glfwGetTime();
+
+        glm::mat4 model = glm::translate(
+                glm::mat4(1.0f),
+                glm::vec3(0,0,-1)
+            );
+        glm::mat4 VP =  camera->getProjectionMatrix(windowSize) * camera->getViewMatrix()*model;
         //TODO: (Req 8) Set the OpenGL viewport using windowSize
+        // making the x,y of glViewport equal to the width and height of the window to take
+        // the whole space of the window
+        glViewport(windowSize[0],windowSize[1],windowSize[0],windowSize[1]);
 
         //TODO: (Req 8) Set the clear color to black and the clear depth to 1
-        
+        glClearColor(0.0,0.0,0.0,1.0);
+        glClearDepth(1.0);
         //TODO: (Req 8) Set the color mask to true and the depth mask to true (to ensure the glClear will affect the framebuffer)
+        glDepthMask(true);
+        glColorMask(true,true,true,true);
         
 
         // If there is a postprocess material, bind the framebuffer
@@ -158,9 +189,14 @@ namespace our {
         }
 
         //TODO: (Req 8) Clear the color and depth buffers
+        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
         
         //TODO: (Req 8) Draw all the opaque commands
         // Don't forget to set the "transform" uniform to be equal the model-view-projection matrix for each render command
+        for(int i=0;i<opaqueCommands.size();i++){
+            opaqueCommands[i].material->shader->set("transform",VP);
+            opaqueCommands[i].mesh->draw();
+        }
         
         // If there is a sky material, draw the sky
         if(this->skyMaterial){
@@ -186,6 +222,10 @@ namespace our {
         }
         //TODO: (Req 8) Draw all the transparent commands
         // Don't forget to set the "transform" uniform to be equal the model-view-projection matrix for each render command
+        for(int i=0;i<transparentCommands.size();i++){
+            transparentCommands[i].material->shader->set("uniform",VP);
+            transparentCommands[i].mesh->draw();
+        }
         
 
         // If there is a postprocess material, apply postprocessing
