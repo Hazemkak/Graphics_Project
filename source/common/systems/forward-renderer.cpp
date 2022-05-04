@@ -51,10 +51,16 @@ namespace our {
         // Then we check if there is a postprocessing shader in the configuration
         if(config.contains("postprocess")){
             //TODO: (Req 10) Create a framebuffer
-
+            glGenFramebuffers(1, &this->postprocessFrameBuffer);
+            glBindFramebuffer(GL_DRAW_FRAMEBUFFER, this->postprocessFrameBuffer);
             //TODO: (Req 10) Create a color and a depth texture and attach them to the framebuffer
             // Hints: The color format can be (Red, Green, Blue and Alpha components with 8 bits for each channel).
             // The depth format can be (Depth component with 24 bits).
+            // glGenTextures(1, this->colorTarget);
+            // glBindTexture(GL_TEXTURE_2D, texture);
+            // GLuint mip_levels = glm::floor(glm::log2(glm::max<float>(width, height))) + 1;
+            // glTexStorage2D(GL_TEXTURE_2D, mip_levels, GL_RGBA8, width, height);
+            // glFramebufferTexture2D(GL_DRAW_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D,texture, 0);
             
             //TODO: (Req 10) Unbind the framebuffer just to be safe
             
@@ -137,7 +143,7 @@ namespace our {
 
         //TODO: (Req 8) Modify the following line such that "cameraForward" contains a vector pointing the camera forward direction
         // HINT: See how you wrote the CameraComponent::getViewMatrix, it should help you solve this one
-        glm::vec3 cameraForward = camera->getViewMatrix()[2];
+        glm::vec3 cameraForward = glm::vec3(0,0,1);
         // glm::vec3 cameraForward = glm::vec3(camera->getViewMatrix()[0][2],camera->getViewMatrix()[1][2],camera->getViewMatrix()[2][2]);
 
         std::sort(transparentCommands.begin(), transparentCommands.end(), [cameraForward](const RenderCommand& first, const RenderCommand& second){
@@ -146,7 +152,7 @@ namespace our {
 
             // what i did is measuring the distance from origin "cam pos" and see which is more far to be drawn first
             // far should be drawn before near
-            if(sqrt(first.center.x)+sqrt(first.center.y)+sqrt(first.center.z) > sqrt(second.center.x)+sqrt(second.center.y)+sqrt(second.center.z))
+            if(pow(first.center.x,2)+pow(first.center.y,2)+pow(first.center.z,2) > pow(second.center.x,2)+pow(second.center.y,2)+pow(second.center.z,2))
                 return true;
             else
                 return false;
@@ -158,7 +164,7 @@ namespace our {
         //TODO: (Req 8) Set the OpenGL viewport using windowSize
         // making the x,y of glViewport equal to the width and height of the window to take
         // the whole space of the window
-        glViewport(windowSize[0],windowSize[1],windowSize[0],windowSize[1]);
+        glViewport(0,0,windowSize[0],windowSize[1]);
 
         //TODO: (Req 8) Set the clear color to black and the clear depth to 1
         glClearColor(0.0,0.0,0.0,1.0);
