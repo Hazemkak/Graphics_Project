@@ -151,7 +151,8 @@ namespace our {
 
         //TODO: (Req 8) Modify the following line such that "cameraForward" contains a vector pointing the camera forward direction
         // HINT: See how you wrote the CameraComponent::getViewMatrix, it should help you solve this one
-        glm::vec3 cameraForward = glm::vec3(0,0,1);
+                our::Entity* cameraOwner= camera->getOwner();
+        glm::vec3 cameraForward = cameraOwner->getLocalToWorldMatrix()*glm::vec4(0,0,-1,1);
         // glm::vec3 cameraForward = glm::vec3(camera->getViewMatrix()[0][2],camera->getViewMatrix()[1][2],camera->getViewMatrix()[2][2]);
 
         std::sort(transparentCommands.begin(), transparentCommands.end(), [cameraForward](const RenderCommand& first, const RenderCommand& second){
@@ -160,10 +161,7 @@ namespace our {
 
             // what i did is measuring the distance from origin "cam pos" and see which is more far to be drawn first
             // far should be drawn before near
-            if(pow(first.center.x,2)+pow(first.center.y,2)+pow(first.center.z,2) > pow(second.center.x,2)+pow(second.center.y,2)+pow(second.center.z,2))
-                return true;
-            else
-                return false;
+            return glm::dot(first.center, cameraForward)<glm::dot(second.center, cameraForward);
         });
 
         //TODO: (Req 8) Get the camera ViewProjection matrix and store it in VP
