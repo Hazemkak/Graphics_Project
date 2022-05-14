@@ -1,5 +1,4 @@
 #version 330
-
 // The texture holding the scene pixels
 uniform sampler2D tex;
 
@@ -20,5 +19,9 @@ void main(){
     // To apply this effect, we only read the green channel from the correct pixel (as defined by tex_coord)
     // To get the red channel, we move by amount STRENGTH to the left then sample another pixel from which we take the red channel
     // To get the blue channel, we move by amount STRENGTH to the right then sample another pixel from which we take the blue channel
-    frag_color = vec4(0.0, 0.0, 0.0, 1.0);
+    //vec4 gv = texture(tex, vec2(tex_coord[0]-STRENGTH,tex_coord[1]-STRENGTH));
+    float r = texture(tex, vec2(tex_coord[0]-STRENGTH,tex_coord[1]-STRENGTH))[0];
+    float g = texture(tex, tex_coord)[1];
+    float b = texture(tex, vec2(tex_coord[0]+STRENGTH,tex_coord[1]+STRENGTH))[2];
+    frag_color = vec4(r, g, b, 1.0);
 }
