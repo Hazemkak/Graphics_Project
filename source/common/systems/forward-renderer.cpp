@@ -204,7 +204,7 @@ namespace our {
             //TODO: (Req 9) setup the sky material
             this->skyMaterial->setup();
             //TODO: (Req 9) Get the camera position
-            glm::vec3 cameraPos = glm::vec( camera->getOwner()->getLocalToWorldMatrix()* glm::vec4(0, 0, -1,1));
+            glm::vec3 cameraPos = glm::vec( camera->getOwner()->getLocalToWorldMatrix()* glm::vec4(0, 0, 0,1));
             
             //TODO: (Req 9) Create a model matrix for the sky such that it always follows the camera (sky sphere center = camera position)
 
