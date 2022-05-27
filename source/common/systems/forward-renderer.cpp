@@ -157,9 +157,10 @@ namespace our {
             program->set("lights[" + std::to_string(i) + "].specular", light->specular);
             program->set("lights[" + std::to_string(i) + "].attenuation", light->attenuation);
             program->set("lights[" + std::to_string(i) + "].cone_angles", glm::vec2(glm::radians(light->cone_angles.x), glm::radians(light->cone_angles.y)));
-            program->set("lights[" + std::to_string(i) + "].position", entities[i]->localTransform.position);
+            program->set("lights[" + std::to_string(i) + "].position", entities[i]->localTransform.position+light->position);
             glm::vec3 rotation = entities[i]->localTransform.rotation;
-            program->set("lights[" + std::to_string(i) + "].direction", (glm::vec3)((glm::yawPitchRoll(rotation[1], rotation[0], rotation[2]) * (glm::vec4(0, -1, 0, 0)))));
+            program->set("lights[" + std::to_string(i) + "].direction", (glm::vec3)(glm::yawPitchRoll(rotation[1]+light->direction[1], rotation[0]+light->direction[0], rotation[2]+light->direction[2]) * (glm::vec4(0, -1, 0, 0))));
+
         }
     }
 
@@ -178,6 +179,7 @@ namespace our {
             program->set("VP", VP);
 
             ForwardRenderer::lightSetup(lightEntities, program);
+
 
             program->set("sky.top", this->sky_top);
             program->set("sky.middle",  this->sky_middle);

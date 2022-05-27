@@ -11,18 +11,18 @@ namespace our
   {
     if (!data.is_object())
       return;
-    std::string lightTypeStr = data.value("lightType", "directional");
+    std::string lightTypeStr = data.value("lightType", "DIRECTIONAL");
     
-    if (lightTypeStr == "directional")
+    if (lightTypeStr == "DIRECTIONAL")
     {
       lightType = LightType::DIRECTIONAL;
     }
-    else if (lightTypeStr == "point")
+    else if (lightTypeStr == "POINT")
     {
       lightType = LightType::POINT;
       attenuation = data.value("attenuation", attenuation);
     }
-    else if (lightTypeStr == "spot")
+    else if (lightTypeStr == "SPOT")
     {
       lightType = LightType::SPOT;
       cone_angles = data.value("cone_angles", cone_angles);
@@ -30,6 +30,8 @@ namespace our
 
     diffuse = data.value("diffuse", diffuse);
     specular = data.value("specular", specular);
-    //position= data.value("position")
+    position= data.value("position",position);
+    direction= data.value("direction",direction);
+
   }
 }

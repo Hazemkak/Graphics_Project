@@ -23,8 +23,8 @@ namespace our
     glm::vec3 attenuation = {0.0f, 0.0f, 0.0f};
     glm::vec2 cone_angles = {45, 90};
 
-    //glm::vec3 direction = {0,0,0};
-    //glm::vec3 postion ={0,0,0}; 
+    glm::vec3 direction = {0,0,0};
+    glm::vec3 position ={0,0,0}; 
 
 
 
