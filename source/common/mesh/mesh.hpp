@@ -32,7 +32,7 @@ namespace our {
             // For the attribute locations, use the constants defined above: ATTRIB_LOC_POSITION, ATTRIB_LOC_COLOR, etc
 
             //Setting elementCount that will be used later with size of elements vector.
-            this->elementCount = elements.size();
+            this->elementCount =(int) elements.size();
 
             
             //Create arrays instead of vectors to be able to pass it to gl functions .
