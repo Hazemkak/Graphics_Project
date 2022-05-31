@@ -40,17 +40,19 @@ namespace our {
         glm::vec3 eye=glm::vec3(M* glm::vec4(0,0,0,1)); 
 
         // transfrom center vector by the world transformation matrix
-        glm::vec3 center=glm::vec(M* glm::vec4(0, 0, -1,1));
+        glm::vec3 center=glm::vec3(M* glm::vec4(0, 0, -1,1));
 
         // transfrom up vector by the world transformation matrix
-        glm::vec3 up= glm::vec3(M* glm::vec4(0, 1, 0,1));
+        glm::vec3 up= glm::vec3(M* glm::vec4(0, 1, 0,0));
 
         // View Tranfromation matrix
         glm::mat4 view = glm::lookAt(
             eye,
             center,
             up
+            
         );
+       
            
         return view;
        

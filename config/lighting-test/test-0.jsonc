@@ -39,24 +39,28 @@
                 "glass": "assets/textures/glass-panels.png",
                 "monkey": "assets/textures/monkey.png",
 
-                "albedo":"assets/textures/albedo.jpg",
-                "emissive": "assets/textures/emissive.jpg",
-                "roughness": "assets/textures/roughness.jpg",
-                "specular": "assets/textures/specular.jpg",
-                "ambient": "assets/textures/ambient_occlusion.jpg"
+                "car": "assets/textures/4.jpg",
+
+                "albedo":"assets/textures/c1.jpg",
+                "emissive": "assets/textures/c2.jpg",
+                "roughness": "assets/textures/c1.jpg",
+                "specular": "assets/textures/c1.jpg",
+                "ambient": "assets/textures/c1.jpg"
             },
             "meshes":{
                 "cube": "assets/models/cube.obj",
                 "monkey": "assets/models/monkey.obj",
                 "plane": "assets/models/plane.obj",
                 "sphere": "assets/models/sphere.obj",
-                "suzanne": "assets/models/Suzanne.obj"
+                "suzanne": "assets/models/Suzanne.obj",
+                "car": "assets/models/car-n.obj"
+               
 
             },
             "samplers":{
                 "default":{},
                 "pixelated":{
-                    "MAG_FILTER": "GL_NEAREST"
+                    "MAG_FILTER": "GL_LINEAR"
                 }
             },
             "materials":{ 
@@ -71,7 +75,7 @@
                             "enabled": true
                         }
                     },
-
+                    "sampler": "pixelated",
                     "albedo_texture":"albedo",
                     "specular_texture":"specular",
                     "roughness_texture":"roughness",
@@ -94,6 +98,7 @@
                     "texture": "moon",
                     "sampler": "default"
                 }
+                
             }
         },
         "world":[
@@ -132,7 +137,7 @@
                 "components": [
                     {
                         "type": "Mesh Renderer",
-                        "mesh": "suzanne",
+                        "mesh": "car",
                         "material": "monkey"
                     },
                     {
