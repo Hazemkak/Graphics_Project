@@ -15,7 +15,8 @@ namespace our {
         // This function computes and returns a matrix that represents this transform
         glm::mat4 toMat4() const;
          // Deserializes the entity data and components from a json object
-        void deserialize(const nlohmann::json&);
+         // sending type of entity to random pos for certain types gas/obstacle
+        void deserialize(const nlohmann::json&,char type=' ');
     };
 
 }

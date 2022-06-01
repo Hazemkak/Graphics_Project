@@ -4,6 +4,7 @@
 #include <glm/gtx/euler_angles.hpp>
 
 #include<iostream>
+#include<ctime>
 
 namespace our {
 
@@ -34,10 +35,15 @@ namespace our {
     }
 
      // Deserializes the entity data and components from a json object
-    void Transform::deserialize(const nlohmann::json& data){
+    void Transform::deserialize(const nlohmann::json& data,char type){
         position = data.value("position", position);
         rotation = glm::radians(data.value("rotation", glm::degrees(rotation)));
         scale    = data.value("scale", scale);
+        // giving x-axis a random number to show at
+        if(type=='g'){
+            
+            position.x=(rand()%51)-25;
+        }
     }
 
 }

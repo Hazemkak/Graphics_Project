@@ -47,7 +47,9 @@
                 "emissive": "assets/textures/emissive.jpg",
                 "roughness": "assets/textures/roughness.jpg",
                 "specular": "assets/textures/specular.jpg",
-                "ambient": "assets/textures/ambient_occlusion.jpg"
+                "ambient": "assets/textures/ambient_occlusion.jpg",
+                "gas":"assets/textures/gas.png",
+                "wall":"assets/textures/wall.jpg"
                 
 
             },
@@ -145,6 +147,40 @@
                  
 
                 },
+                "gas":{
+                    "type": "textured",
+                    "shader": "textured",
+                    "pipelineState": {
+                        "faceCulling":{
+                            "enabled": false
+                        },
+                        "depthTesting":{
+                            "enabled": true
+                        }
+                    },
+                    "tint": [1, 1, 1, 1],
+                    "texture": "gas",
+                    "sampler": "default"
+                 
+
+                },
+                "wall":{
+                    "type": "textured",
+                    "shader": "textured",
+                    "pipelineState": {
+                        "faceCulling":{
+                            "enabled": false
+                        },
+                        "depthTesting":{
+                            "enabled": true
+                        }
+                    },
+                    "tint": [1, 1, 1, 1],
+                    "texture": "wall",
+                    "sampler": "default"
+                 
+
+                },
                 "moon":{
                     "type": "textured",
                     "shader": "textured",
@@ -183,6 +219,7 @@
         "world":[
             {
                 "position": [0, 4, 8],
+                "name":"camera",
                
                 "components": [
                     {
@@ -272,6 +309,88 @@
                     }
                 ]
             },
+            {
+                "position": [0, 1.5, -200],
+                "rotation": [0, 0, 0],
+                "name":"gas0",
+                "scale": [1.5, 1.5, 1],
+                "components": [
+                    {
+                        "type": "Mesh Renderer",
+                        "mesh": "plane",
+                        "material": "gas"
+                    }
+                ]
+            },
+            {
+                "position": [0, 1.5, -800],
+                "rotation": [0, 0, 0],
+                "name":"gas1",
+                "scale": [1.5, 1.5, 1],
+                "components": [
+                    {
+                        "type": "Mesh Renderer",
+                        "mesh": "plane",
+                        "material": "gas"
+                    }
+                ]
+            },
+            {
+                "position": [0, 1.5, -400],
+                "rotation": [0, 0, 0],
+                "name":"gas2",
+                "scale": [1.5, 1.5, 1],
+                "components": [
+                    {
+                        "type": "Mesh Renderer",
+                        "mesh": "plane",
+                        "material": "gas"
+                    }
+                ]
+            },
+
+            {
+                "position": [0, 4, -150],
+                "rotation": [0, 0, 0],
+                "name":"wall0",
+                "scale": [4, 4, 1],
+                "components": [
+                    {
+                        "type": "Mesh Renderer",
+                        "mesh": "plane",
+                        "material": "wall"
+                    }
+                ]
+            },
+            {
+                "position": [0, 4, -650],
+                "rotation": [0, 0, 0],
+                "name":"wall1",
+                "scale": [4, 4, 1],
+                "components": [
+                    {
+                        "type": "Mesh Renderer",
+                        "mesh": "plane",
+                        "material": "wall"
+                    }
+                ]
+            },
+            
+            {
+                "position": [0, 4, -350],
+                "rotation": [0, 0, 0],
+                "name":"wall2",
+                "scale": [4, 4, 1],
+                "components": [
+                    {
+                        "type": "Mesh Renderer",
+                        "mesh": "plane",
+                        "material": "wall"
+                    }
+                ]
+            },
+            
+            
                 
             {
                 "position": [0, 0, -2500],

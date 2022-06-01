@@ -15,8 +15,10 @@
 #include "states/entity-test-state.hpp"
 #include "states/renderer-test-state.hpp"
 #include "states/menu-state.hpp"
+#include <ctime>
 
 int main(int argc, char** argv) {
+     srand(time( 0 ) );
     
     flags::args args(argc, argv); // Parse the command line arguments
     // config_path is the path to the json file containing the application configuration

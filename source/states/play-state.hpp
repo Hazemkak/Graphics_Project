@@ -7,6 +7,7 @@
 #include <systems/free-camera-controller.hpp>
 #include <systems/movement.hpp>
 #include <asset-loader.hpp>
+#include "./ecs/entity.hpp"
 
 // This state shows how to use the ECS framework and deserialization.
 class Playstate: public our::State {
@@ -63,6 +64,22 @@ class Playstate: public our::State {
 
     // the logic of the game should implemented here
     void logic(our::World * world){
+        
+        // Making the logic of collision
+        for(const auto i:world->getEntities()){
+            // first getting the cam position to check it with wall/gas
+            if(i->name=="camera"){
+                for(const auto i:world->getEntities()){
+                    if(i->name.substr(0,3)=="gas"){
+                        
+                    }
+                    if(i->name.substr(0,4)=="wall"){
+                        
+                    }
+                }
+                break;
+            }
+        }
        
     if (getApp()->getKeyboard().justPressed(GLFW_KEY_ESCAPE))
     {

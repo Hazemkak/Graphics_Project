@@ -42,7 +42,7 @@
                 "car": "assets/textures/4.jpg",
 
                 "albedo":"assets/textures/albedo.jpg",
-                "emissive": "assets/textures/emissive.jpg",
+                "emissive": "assets/textures/gas.jpg",
                 "roughness": "assets/textures/roughness.jpg",
                 "specular": "assets/textures/specular.jpg",
                 "ambient": "assets/textures/ambient.jpg"
@@ -52,7 +52,7 @@
                 "monkey": "assets/models/monkey.obj",
                 "plane": "assets/models/plane.obj",
                 "sphere": "assets/models/sphere.obj",
-                "suzanne": "assets/models/Suzanne.obj",
+                "suzanne": "assets/models/cube.obj",
                 "car": "assets/models/car-n.obj"
                
 
@@ -65,8 +65,8 @@
             },
             "materials":{ 
                 "monkey":{
-                    "type": "lighted",
-                    "shader": "lighted",
+                    "type": "textured",
+                    "shader": "textured",
                     "pipelineState": {
                         "faceCulling":{
                             "enabled": false
@@ -75,13 +75,9 @@
                             "enabled": true
                         }
                     },
-                    "sampler": "pixelated",
-                    "albedo_texture":"albedo",
-                    "specular_texture":"specular",
-                    "roughness_texture":"roughness",
-                    "emissive_texture":"emissive",
-                    "alpha_texture":"alpha",
-                    "ambientOcclusion_texture":"ambient"
+                    "texture": "emissive",
+                    "sampler": "default"
+               
                 },
                 "moon":{
                     "type": "textured",
@@ -137,7 +133,7 @@
                 "components": [
                     {
                         "type": "Mesh Renderer",
-                        "mesh": "suzanne",
+                        "mesh": "plane",
                         "material": "monkey"
                     },
                     {

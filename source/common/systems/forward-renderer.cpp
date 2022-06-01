@@ -6,7 +6,7 @@
 #include <vector>
 #include <glm/gtx/euler_angles.hpp>
 
-
+#include <string>
 #include <iostream>
 using namespace std;
 

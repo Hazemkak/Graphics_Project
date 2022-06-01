@@ -28,7 +28,9 @@ namespace our {
     void Entity::deserialize(const nlohmann::json& data){
         if(!data.is_object()) return;
         name = data.value("name", name);
-        localTransform.deserialize(data);
+        // in case gas/obstacle we send it's type to random it's position on x-axis
+        localTransform.deserialize(data,name.substr(0,3)=="gas" || name.substr(0,4)=="wall" ? 'g':' ');
+
         if(data.contains("components")){
             if(const auto& components = data["components"]; components.is_array()){
                 for(auto& component: components){
