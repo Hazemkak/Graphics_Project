@@ -230,7 +230,7 @@
                     },
                     {
                         "type": "Movement",
-                        "linearVelocity": [0, 0, -50],
+                        "linearVelocity": [0, 0, -20],
                         "angularVelocity": [0, 0, 0]
                     }
                 ],
@@ -238,6 +238,8 @@
                     {
                         "position": [0, -2, -8],
                         "rotation": [0, 180, 0],
+                        "scale":[1.5,1.5,1.5],
+                        "name" : "car",
                        
                         "components": [
                             {
@@ -245,6 +247,7 @@
                                 "mesh": "car",
                                 "material": "carmtl"
                             }
+                           
                         ]
                     },
 
@@ -263,6 +266,20 @@
                             {
                                 "type": "Movement",
                                 "angularVelocity": [0, 90, 0]
+                            }
+                        ]
+                    },
+
+                    {
+                        "position": [10, 8, -10],
+                        "rotation": [0, 0, 0],
+                        "name":"energy",
+                        "scale": [7, 0.3, 1],
+                        "components": [
+                            {
+                                "type": "Mesh Renderer",
+                                "mesh": "plane",
+                                "material": "gas"
                             }
                         ]
                     }
@@ -348,6 +365,59 @@
                     }
                 ]
             },
+            {
+                "position": [0, 1.5, -500],
+                "rotation": [0, 0, 0],
+                "name":"gas3",
+                "scale": [1.5, 1.5, 1],
+                "components": [
+                    {
+                        "type": "Mesh Renderer",
+                        "mesh": "plane",
+                        "material": "gas"
+                    }
+                ]
+            },
+            {
+                "position": [0, 1.5, -600],
+                "rotation": [0, 0, 0],
+                "name":"gas4",
+                "scale": [1.5, 1.5, 1],
+                "components": [
+                    {
+                        "type": "Mesh Renderer",
+                        "mesh": "plane",
+                        "material": "gas"
+                    }
+                ]
+            },
+            {
+                "position": [0, 1.5, -750],
+                "rotation": [0, 0, 0],
+                "name":"gas5",
+                "scale": [1.5, 1.5, 1],
+                "components": [
+                    {
+                        "type": "Mesh Renderer",
+                        "mesh": "plane",
+                        "material": "gas"
+                    }
+                ]
+            },
+            {
+                "position": [0, 1.5, -1000],
+                "rotation": [0, 0, 0],
+                "name":"gas6",
+                "scale": [1.5, 1.5, 1],
+                "components": [
+                    {
+                        "type": "Mesh Renderer",
+                        "mesh": "plane",
+                        "material": "gas"
+                    }
+                ]
+            },
+            
 
             {
                 "position": [0, 4, -150],
