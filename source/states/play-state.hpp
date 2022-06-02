@@ -43,7 +43,7 @@ class Playstate : public our::State
     void onDraw(double deltaTime) override
     {
 
-        logic(&world);
+        logic(&world,deltaTime);
         // Here, we just run a bunch of systems to control the world logic
         movementSystem.update(&world, (float)deltaTime);
         cameraController.update(&world, (float)deltaTime);
@@ -63,10 +63,16 @@ class Playstate : public our::State
     }
 
     // the logic of the game should implemented here
-    void logic(our::World *world)
+    void logic(our::World *world,double deltaTime)
     {
+        const int MAX_SCALE=7;
+        int wallCollision=2.5;
+        int gasCollision=1.5;
+        
+
         our::Entity *car = nullptr;
         our::Entity *energy = nullptr;
+        our::Entity *camera = nullptr;
         // Making the logic of collision
         for (const auto i : world->getEntities())
         {
@@ -79,18 +85,40 @@ class Playstate : public our::State
             {
                 energy = i;
             }
+            if (i->name == "camera")
+            {
+                camera = i;
+            }
+        }
+
+        glm::vec3 carPos=glm::vec3(car->getLocalToWorldMatrix()* glm::vec4(car->localTransform.position.x,car->localTransform.position.y,car->localTransform.position.z,1));
+        std::cout<<carPos.z<<"     kkkk"<<std::endl;
+
+        // decrement the car energy with time
+        energy->localTransform.scale.x-=deltaTime/10.0;
+
+        if(energy->localTransform.scale.x<=0){
+            // camera->getComponent<CameraComponent>()
+            // // todo change the linear velocity of cam to 0 z-axis
+            // for(const auto j : camera->components){
+            //     
+            //     // if(j["type"]=="Movement"){
+            //     //     j["linearVelocity"].z=0;
+            //     // }
+            // }
         }
 
         for (const auto i : world->getEntities())
         {
             if (i->name.substr(0, 3) == "gas")
             {
-                glm::vec3 carPos=glm::vec3(car->getLocalToWorldMatrix()* glm::vec4(car->localTransform.position.x,car->localTransform.position.y,car->localTransform.position.z,1));
+               
                 glm::vec3 objPos=i->localTransform.position;
                 //check for position related to car
                 // std::cout<<i->name<<"  ";
                 // std::cout<<abs(abs(i->localTransform.position.z) - abs(car->localTransform.position.z))<<"  "<<g<<"   "<<abs(abs(i->localTransform.position.z))<<std::endl;
 
+                // TODO: check for the total car length collision
                 if(abs(abs(objPos.z) - abs(carPos.z)) < 0.1 ){
                     double xObj=objPos.x;
                     double xCar=carPos.x;
@@ -101,8 +129,9 @@ class Playstate : public our::State
 
                     std::cout<<leftCar<<"  "<<rightCar<<"  "<<leftObj<<"  "<<rightObj<<std::endl;
 
-                    if((leftObj<rightCar && leftObj>leftCar) || (rightObj<rightCar && rightObj>leftCar)){
+                    if((leftObj<rightCar && leftObj>leftCar) || (rightObj<rightCar && rightObj>leftCar) || (rightCar>rightObj && leftCar<leftObj)){
                         // TODO: increase the energy bar of car
+                        energy->localTransform.scale.x+=gasCollision;
                         std::cout<<"collision gas"<<std::endl;
                     }
                         
@@ -126,13 +155,24 @@ class Playstate : public our::State
 
                     std::cout<<leftCar<<"  "<<rightCar<<"  "<<leftObj<<"  "<<rightObj<<std::endl;
 
-                    if((leftObj<rightCar && leftObj>leftCar) || (rightObj<rightCar && rightObj>leftCar)){
+                    if((rightCar<leftObj && rightCar>leftObj) || (leftCar>leftObj && leftCar<rightObj) || (leftObj<leftCar && rightObj>rightCar)){
                         // TODO: decrement the energy bar of car
+                        energy->localTransform.scale.x-=wallCollision;
                         std::cout<<"collision wall"<<std::endl;
                     }
                         
                 }
             }
+        }
+
+        if(energy->localTransform.scale.x <= 0){
+            energy->localTransform.scale.x=0;
+            //TODO: go to game over
+        }
+
+        if(energy->localTransform.scale.x > MAX_SCALE){
+            energy->localTransform.scale.x=MAX_SCALE;
+            //TODO: go to game over
         }
 
         if (getApp()->getKeyboard().justPressed(GLFW_KEY_ESCAPE))

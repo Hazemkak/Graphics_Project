@@ -49,7 +49,8 @@
                 "specular": "assets/textures/specular.jpg",
                 "ambient": "assets/textures/ambient_occlusion.jpg",
                 "gas":"assets/textures/gas.png",
-                "wall":"assets/textures/wall.jpg"
+                "wall":"assets/textures/wall.jpg",
+                "bump":"assets/textures/bump.jpg"
                 
 
             },
@@ -177,6 +178,24 @@
                     },
                     "tint": [1, 1, 1, 1],
                     "texture": "wall",
+                    "sampler": "default"
+                 
+
+                },
+
+                "bump":{
+                    "type": "textured",
+                    "shader": "textured",
+                    "pipelineState": {
+                        "faceCulling":{
+                            "enabled": false
+                        },
+                        "depthTesting":{
+                            "enabled": true
+                        }
+                    },
+                    "tint": [1, 1, 1, 1],
+                    "texture": "bump",
                     "sampler": "default"
                  
 
@@ -456,6 +475,20 @@
                         "type": "Mesh Renderer",
                         "mesh": "plane",
                         "material": "wall"
+                    }
+                ]
+            },
+
+            {
+                "position": [0, 0.2, -150],
+                "rotation": [-90, 0, 90],
+                "scale": [1, 10, 1],
+                "name":"bump",
+                "components": [
+                    {
+                        "type": "Mesh Renderer",
+                        "mesh": "plane",
+                        "material": "bump"
                     }
                 ]
             },
