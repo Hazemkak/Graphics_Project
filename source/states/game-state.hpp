@@ -62,19 +62,69 @@ class Gamestate : public our::State
         our::clearAllAssets();
     }
 
-    void checkCollision(our::Entity* obj,our::Entity* energy,our::Entity* car , our::Entity* camera){
+    void checkCollision(our::Entity *obj, our::Entity *energy, our::Entity *car, our::Entity *camera)
+    {
+        const double MAX_SCALE = 7;
+        double wallCollision = 2.5;
+        double gasCollision = 1.5;
+        double stepForward = (rand() % 100) + 70;
 
+        glm::vec3 objPos = obj->localTransform.position;
+        our::MovementComponent *movement = camera->getComponent<our::MovementComponent>();
+        double zDepth = movement->linearVelocity.z / -200.0;
+
+        glm::vec3 carPos = glm::vec3(car->getLocalToWorldMatrix() * glm::vec4(car->localTransform.position.x, car->localTransform.position.y, car->localTransform.position.z, 1));
+        // check for position related to car
+        if (abs(abs(objPos.z) - abs(carPos.z)) < zDepth)
+        {
+
+            if (abs(carPos.x - objPos.x) <= (car->localTransform.scale.x + obj->localTransform.scale.x) )
+            {   std::cout<<"objx : "<< objPos.x << "  carx : "<<carPos.x <<"    " <<car->localTransform.scale.x <<"   " << obj->localTransform.scale.x<<std::endl;
+                // Collision detected
+                if (obj->name.substr(0, 3) == "gas") //----------- GAS ------------//
+                {
+                    obj->localTransform.position.z -= stepForward; // to avoid multiple collision
+                    energy->localTransform.scale.x += gasCollision;
+                    std::cout << "collision gas" << std::endl;
+                }
+                else if (obj->name.substr(0, 3) == "wal") //----------- Wall ------------//
+                {
+                    obj->localTransform.position.z -= stepForward; // to avoid multiple collision
+                    energy->localTransform.scale.x -= wallCollision;
+                    std::cout << "collision wall" << std::endl;
+                }
+                else if (obj->name.substr(0, 3) == "bum") //----------- Bump ------------//
+                {
+                    obj->localTransform.position.z -= stepForward; // to avoid multiple collision
+                    our::MovementComponent *movement = camera->getComponent<our::MovementComponent>();
+                    movement->linearVelocity.z /= 1.3;
+                    std::cout << "bump collision" << std::endl;
+                }
+                else if (obj->name.substr(0, 3) == "can") //----------- Can ------------//
+                {
+                    obj->localTransform.position.z -= stepForward; // to avoid multiple collision
+                    our::MovementComponent *movement = camera->getComponent<our::MovementComponent>();
+                    movement->linearVelocity.z *= 1.3;
+                    std::cout << "can collision" << std::endl;
+                }
+            }
+        }
+        else if (abs(objPos.z) < abs(carPos.z) - 10)
+        {
+
+            obj->localTransform.position.x = (rand() % 51) - 25; // to change x-axis pos
+            obj->localTransform.position.z -= stepForward;       // to avoid multiple collision
+        }
     }
 
     // the logic of the game should implemented here
     void logic(our::World *world, double deltaTime)
     {
-        
+
         const double MAX_SCALE = 7;
         double wallCollision = 2.5;
         double gasCollision = 1.5;
         double stepForward = (rand() % 100) + 70;
-        
 
         our::Entity *car = nullptr;
         our::Entity *energy = nullptr;
@@ -101,119 +151,23 @@ class Gamestate : public our::State
             }
         }
         our::MovementComponent *movement = camera->getComponent<our::MovementComponent>();
-        double zDepth = movement->linearVelocity.z/-200.0;
+        double zDepth = movement->linearVelocity.z / -200.0;
 
         glm::vec3 carPos = glm::vec3(car->getLocalToWorldMatrix() * glm::vec4(car->localTransform.position.x, car->localTransform.position.y, car->localTransform.position.z, 1));
-        // std::cout<<carPos.z<<"     kkkk"<<std::endl;
 
         // decrement the car energy with time
         energy->localTransform.scale.x -= deltaTime / 10.0;
 
         for (const auto i : world->getEntities())
         {
-            if (i->name.substr(0, 3) == "gas")
-            {
-
-                glm::vec3 objPos = i->localTransform.position;
-                // check for position related to car
-                //  TODO: check for the total car length collision
-                if (abs(abs(objPos.z) - abs(carPos.z)) < zDepth)
-                {
-
-                    if (abs(carPos.x - objPos.x) <= (car->localTransform.scale.x + i->localTransform.scale.x) + 0.5)
-                    {
-                        // TODO: increase the energy bar of car
-                        i->localTransform.position.z -= stepForward; // to avoid multiple collision
-                        energy->localTransform.scale.x += gasCollision;
-                        std::cout << "collision gas" << std::endl;
-                    }
-                }
-                else if (abs(objPos.z) < abs(carPos.z) - 10)
-                {
-
-                    i->localTransform.position.x = (rand() % 51) - 25; // to change x-axis pos
-                    i->localTransform.position.z -= stepForward;       // to avoid multiple collision
-                }
-            }
-            else if (i->name.substr(0, 4) == "wall")
-            {
-                glm::vec3 carPos = glm::vec3(car->getLocalToWorldMatrix() * glm::vec4(car->localTransform.position.x, car->localTransform.position.y, car->localTransform.position.z, 1));
-                glm::vec3 objPos = i->localTransform.position;
-
-                if (abs(abs(objPos.z) - abs(carPos.z)) < zDepth)
-                {
-
-                    if (abs(carPos.x - objPos.x) <= (car->localTransform.scale.x + i->localTransform.scale.x))
-                    {
-                        // TODO: increase the energy bar of car
-                        i->localTransform.position.z -= stepForward; // to avoid multiple collision
-                        energy->localTransform.scale.x -= wallCollision;
-                        std::cout << "collision wall" << std::endl;
-                    }
-                }
-                else if (abs(objPos.z) < abs(carPos.z) - 10)
-                {
-
-                    i->localTransform.position.x = (rand() % 51) - 25; // to change x-axis pos
-                    i->localTransform.position.z -= stepForward;       // to avoid multiple collision
-                }
-            }
-            else if (i->name.substr(0, 4) == "bump")
-            {
-                glm::vec3 carPos = glm::vec3(car->getLocalToWorldMatrix() * glm::vec4(car->localTransform.position.x, car->localTransform.position.y, car->localTransform.position.z, 1));
-                glm::vec3 objPos = glm::vec3(i->getLocalToWorldMatrix() * glm::vec4(i->localTransform.position.x, i->localTransform.position.y, i->localTransform.position.z, 1));
-
-                if (abs(abs(objPos.z) - abs(carPos.z)) < zDepth)
-                {
-                    std::cout << "hhh" << std::endl;
-
-                    if (abs(carPos.x - objPos.x) <= (car->localTransform.scale.x + i->localTransform.scale.y))
-                    {
-                        // TODO: increase the energy bar of car
-                        i->localTransform.position.z -= stepForward; // to avoid multiple collision
-                        our::MovementComponent *movement = camera->getComponent<our::MovementComponent>();
-                        movement->linearVelocity.z /= 1.3;
-                        std::cout << "bump collision" << std::endl;
-                    }
-                }
-                else if (abs(objPos.z) < abs(carPos.z) - 10)
-                {
-
-                    i->localTransform.position.x = (rand() % 51) - 25; // to change x-axis pos
-                    i->localTransform.position.z -= stepForward;       // to avoid multiple collision
-                }
-            }
-            else if (i->name.substr(0, 3) == "can")
-            {
-
-                glm::vec3 objPos = i->localTransform.position;
-                // check for position related to car
-                //  TODO: check for the total car length collision
-                if (abs(abs(objPos.z) - abs(carPos.z)) < zDepth)
-                {
-
-                    if (abs(carPos.x - objPos.x) <= (car->localTransform.scale.x + i->localTransform.scale.x) + 0.5)
-                    {
-                        // TODO: increase the energy bar of car
-                        i->localTransform.position.z -= stepForward; // to avoid multiple collision
-                        our::MovementComponent *movement = camera->getComponent<our::MovementComponent>();
-                        movement->linearVelocity.z *= 1.3;
-                        std::cout << "can collision" << std::endl;
-                    }
-                }
-                else if (abs(objPos.z) < abs(carPos.z) - 10)
-                {
-
-                    i->localTransform.position.x = (rand() % 51) - 25; // to change x-axis pos
-                    i->localTransform.position.z -= stepForward;       // to avoid multiple collision
-                }
-            }
+            if(i->name.substr(0,3)=="bum" || i->name.substr(0,3)=="wal" || i->name.substr(0,3)=="gas" || i->name.substr(0,3)=="can")
+                checkCollision(i,energy,car,camera);
         }
 
         if (energy->localTransform.scale.x <= 0)
         {
             energy->localTransform.scale.x = 0;
-            // TODO: go to game over
+            // go to game over
             getApp()->changeState("end");
         }
 

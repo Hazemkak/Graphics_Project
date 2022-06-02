@@ -381,7 +381,7 @@
                         "position": [10, 8, -10],
                         "rotation": [0, 0, 0],
                         "name":"energy",
-                        "scale": [7, 0.3, 1],
+                        "scale": [15, 0.3, 1],
                         "components": [
                             {
                                 "type": "Mesh Renderer",
