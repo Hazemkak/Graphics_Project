@@ -15,6 +15,8 @@
 #include "states/entity-test-state.hpp"
 #include "states/renderer-test-state.hpp"
 #include "states/menu-state.hpp"
+#include "states/game-state.hpp"
+#include "states/end-game-state.hpp"
 #include <ctime>
 
 int main(int argc, char** argv) {
@@ -44,7 +46,9 @@ int main(int argc, char** argv) {
     
     // Register all the states of the project in the application
     app.registerState<Playstate>("main");
+    app.registerState<Gamestate>("game");
     app.registerState<MenuState>("menu");
+    app.registerState<EndGameState>("end");
     app.registerState<MeshTestState>("mesh-test");
     app.registerState<TransformTestState>("transform-test");
     app.registerState<PipelineTestState>("pipeline-test");

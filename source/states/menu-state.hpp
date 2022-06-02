@@ -66,10 +66,9 @@ class MenuState: public our::State {
 
        
     if(getApp()->getKeyboard().justPressed(GLFW_KEY_ENTER))
-
     {
-       
-        getApp()->changeState("main");
+        
+        getApp()->changeState("game");
 
     }else if (getApp()->getKeyboard().justPressed(GLFW_KEY_ESCAPE))
     {

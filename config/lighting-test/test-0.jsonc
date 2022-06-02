@@ -44,8 +44,7 @@
                 "albedo":"assets/textures/albedo.jpg",
                 "emissive": "assets/textures/gas.jpg",
                 "roughness": "assets/textures/roughness.jpg",
-                "specular": "assets/textures/specular.jpg",
-                "ambient": "assets/textures/ambient.jpg"
+                "specular": "assets/textures/specular.jpg"
             },
             "meshes":{
                 "cube": "assets/models/cube.obj",
@@ -133,7 +132,7 @@
                 "components": [
                     {
                         "type": "Mesh Renderer",
-                        "mesh": "plane",
+                        "mesh": "monkey",
                         "material": "monkey"
                     },
                     {

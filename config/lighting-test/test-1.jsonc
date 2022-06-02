@@ -50,7 +50,7 @@
                 "monkey": "assets/models/monkey.obj",
                 "plane": "assets/models/plane.obj",
                 "sphere": "assets/models/sphere.obj",
-                "suzanne": "assets/models/Suzanne.obj"
+                "suzanne": "assets/models/can.obj"
 
             },
             "samplers":{
