@@ -483,7 +483,33 @@
                 "position": [0, 0.2, -150],
                 "rotation": [-90, 0, 90],
                 "scale": [1, 12.5, 1],
-                "name":"bump",
+                "name":"bump0",
+                "components": [
+                    {
+                        "type": "Mesh Renderer",
+                        "mesh": "plane",
+                        "material": "bump"
+                    }
+                ]
+            },
+            {
+                "position": [0, 0.2, -200],
+                "rotation": [-90, 0, 90],
+                "scale": [1, 12.5, 1],
+                "name":"bump1",
+                "components": [
+                    {
+                        "type": "Mesh Renderer",
+                        "mesh": "plane",
+                        "material": "bump"
+                    }
+                ]
+            },
+            {
+                "position": [0, 0.2, -250],
+                "rotation": [-90, 0, 90],
+                "scale": [1, 12.5, 1],
+                "name":"bump2",
                 "components": [
                     {
                         "type": "Mesh Renderer",
