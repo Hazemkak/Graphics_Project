@@ -71,6 +71,7 @@ class Playstate : public our::State
         
 
         our::Entity *car = nullptr;
+        our::Entity *bump = nullptr;
         our::Entity *energy = nullptr;
         our::Entity *camera = nullptr;
         // Making the logic of collision
@@ -80,14 +81,22 @@ class Playstate : public our::State
             if (i->name == "car")
             {
                 car = i;
+                continue;
             }
             if (i->name == "energy")
             {
                 energy = i;
+                continue;
             }
             if (i->name == "camera")
             {
                 camera = i;
+                continue;
+            }
+            if (i->name == "bump")
+            {
+                bump = i;
+                continue;
             }
         }
 
@@ -129,7 +138,7 @@ class Playstate : public our::State
 
                     std::cout<<leftCar<<"  "<<rightCar<<"  "<<leftObj<<"  "<<rightObj<<std::endl;
 
-                    if((leftObj<rightCar && leftObj>leftCar) || (rightObj<rightCar && rightObj>leftCar) || (rightCar>rightObj && leftCar<leftObj)){
+                    if((rightObj<rightCar && leftCar<rightObj) || (rightCar>leftObj && leftCar<leftObj) || (rightCar>rightObj && leftCar<leftObj)){
                         // TODO: increase the energy bar of car
                         energy->localTransform.scale.x+=gasCollision;
                         std::cout<<"collision gas"<<std::endl;
@@ -155,7 +164,7 @@ class Playstate : public our::State
 
                     std::cout<<leftCar<<"  "<<rightCar<<"  "<<leftObj<<"  "<<rightObj<<std::endl;
 
-                    if((rightCar<leftObj && rightCar>leftObj) || (leftCar>leftObj && leftCar<rightObj) || (leftObj<leftCar && rightObj>rightCar)){
+                    if((rightObj<rightCar && leftCar<rightObj) || (rightCar>leftObj && leftCar<leftObj) || (leftObj<leftCar && rightObj>rightCar)){
                         // TODO: decrement the energy bar of car
                         energy->localTransform.scale.x-=wallCollision;
                         std::cout<<"collision wall"<<std::endl;
