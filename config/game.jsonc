@@ -15,8 +15,6 @@
 
     // game scene
     "scene": {
-
-        
         "renderer":{
             "sky": "assets/textures/sky.jpg",
             "postprocess": "assets/shaders/postprocess/vignette.frag"
@@ -448,20 +446,20 @@
             
             ///////////////// Wall
             {
-                "position": [0, 0, -100],
-                "rotation": [0, -90, 0],
-                "name":"wall0",
-                "scale": [0.05, 0.5, 0.5],
+                "position": [0, 4, -150],
+                "rotation": [0, 0, 0],
+                "name":"wall1",
+                "scale": [8, 4, 0.2],
                 "components": [
                     {
                         "type": "Mesh Renderer",
-                        "mesh": "wall",
-                        "material": "wall2"
+                        "mesh": "plane",
+                        "material": "wall"
                     }
                 ]
             },
             {
-                "position": [0, 4, -150],
+                "position": [0, 4, -100],
                 "rotation": [0, 0, 0],
                 "name":"wall1",
                 "scale": [8, 4, 0.2],
@@ -617,7 +615,9 @@
             },
             "textures":{
                 "moon": "assets/textures/moon.jpg",
-                "grass": "assets/textures/10.jpg",
+                "white": "assets/textures/WHITE.jpg",
+                "startGame": "assets/textures/STARTG.png",
+                "quitGame": "assets/textures/QUIT.png",
                 "wood": "assets/textures/wood.jpg",
                 "glass": "assets/textures/glass-panels.png",
                 "monkey": "assets/textures/monkey.png",
@@ -639,7 +639,7 @@
             "samplers":{
                 "default":{},
                 "pixelated":{
-                    "MAG_FILTER": "GL_NEAREST"
+                    "MAG_FILTER": "GL_LINEAR"
                 }
             },
             "materials":{ 
@@ -677,7 +677,7 @@
                     "texture": "moon",
                     "sampler": "default"
                 },
-                "grass":{
+                "white":{
                     "type": "textured",
                     "shader": "textured",
                     "pipelineState": {
@@ -689,7 +689,37 @@
                         }
                     },
                     "tint": [1, 1, 1, 1],
-                    "texture": "grass",
+                    "texture": "white",
+                    "sampler": "default"
+                },
+                "startGame":{
+                    "type": "textured",
+                    "shader": "textured",
+                    "pipelineState": {
+                        "faceCulling":{
+                            "enabled": false
+                        },
+                        "depthTesting":{
+                            "enabled": true
+                        }
+                    },
+                    "tint": [1, 1, 1, 1],
+                    "texture": "startGame",
+                    "sampler": "default"
+                },
+                "quitGame":{
+                    "type": "textured",
+                    "shader": "textured",
+                    "pipelineState": {
+                        "faceCulling":{
+                            "enabled": false
+                        },
+                        "depthTesting":{
+                            "enabled": true
+                        }
+                    },
+                    "tint": [1, 1, 1, 1],
+                    "texture": "quitGame",
                     "sampler": "default"
                 }
             }
@@ -697,7 +727,7 @@
         "world":[
             
             {
-                "position": [0, 0, 10],
+                "position": [0, 4, 8],
                 "components": [
                     {
                         "type": "Camera"
@@ -705,27 +735,48 @@
                    
                 ],
                 "children": [
-
-                ]
-            },
-            {
-                "position": [0, -1, 0],
-                "rotation": [0, 0, 0],
-                "scale": [16, 8, 8],
-                "components": [
                     {
-                        "type": "Mesh Renderer",
-                        "mesh": "plane",
-                        "material": "grass"
-                    },
-                    {
-                        "type": "Movement",
-                        "linearVelocity": [0, 0.0, 0],
-                        "angularVelocity": [0, 0, 0]
+                        "position": [0, -0.2, -8],
+                        "rotation": [0, 0, 0],
+                        "scale": [8, 4, -1],
+                        "components": [
+                            {
+                                "type": "Mesh Renderer",
+                                "mesh": "plane",
+                                "material": "white"
+                            }
+                          
+                        ]
+                    },{
+                        "position": [-3, 0, -7],
+                        "rotation": [0, 0, 0],
+                        "scale": [2, 2, 1],
+                        "name":"startGame",
+                        "components": [
+                            {
+                                "type": "Mesh Renderer",
+                                "mesh": "plane",
+                                "material": "startGame"
+                            }
+                          
+                        ]
+                    },{
+                        "position": [3, 0, -7],
+                        "rotation": [0, 0, 0],
+                        "scale": [1, 1, 1],
+                        "name":"quitGame",
+                        "components": [
+                            {
+                                "type": "Mesh Renderer",
+                                "mesh": "plane",
+                                "material": "quitGame"
+                            }
+                        ]
                     }
-                  
                 ]
             },
+            
+            
             {
                 "position": [0, 18, -11],
                 "rotation": [45, 45, 0],

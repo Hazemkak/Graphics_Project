@@ -99,12 +99,12 @@ namespace our
             if(app->getKeyboard().isPressed(GLFW_KEY_E)) position -= up * (deltaTime * current_sensitivity.y);
             // A & D moves the player left or right 
             
-            if(app->getKeyboard().isPressed(GLFW_KEY_D)){
+            if(app->getKeyboard().isPressed(GLFW_KEY_RIGHT)){
                 if(position.x <= 23){ // to avoid the car from going off road
                     position += right * (deltaTime * current_sensitivity.x*4);
                 }
             } 
-            if(app->getKeyboard().isPressed(GLFW_KEY_A)){
+            if(app->getKeyboard().isPressed(GLFW_KEY_LEFT)){
                 if(position.x >= -23){ // to avoid the car from going off road
                     position -= right * (deltaTime * current_sensitivity.x*4);
                 }

@@ -84,7 +84,6 @@ class Gamestate : public our::State
 
             if (abs(carPos.x - objPos.x) <= (car->localTransform.scale.x + obj->localTransform.scale.x + 0.5))
             {
-                std::cout << "objx : " << objPos.x << "  carx : " << carPos.x << "    " << car->localTransform.scale.x << "   " << obj->localTransform.scale.x << std::endl;
                 // Collision detected
                 if (obj->name.substr(0, 3) == "gas") //----------- GAS ------------//
                 {
@@ -159,10 +158,7 @@ class Gamestate : public our::State
         }
 
         // decrement the car energy with time
-        // if (camera->localTransform.position.z > -4010)
-        // { // if the car finishes the game stop reducing the energy
         energy->localTransform.scale.x -= deltaTime / 10.0;
-        // }
 
         for (const auto i : world->getEntities())
         {
@@ -171,7 +167,6 @@ class Gamestate : public our::State
             if (i->name.substr(0, 4) == "road" && ((abs(i->localTransform.position.z) + i->localTransform.scale.x) < abs(glm::vec3(car->getLocalToWorldMatrix() * glm::vec4(car->localTransform.position, 1)).z) - 50))
                 i->localTransform.position.z -= 2000; // render the road again in front
         }
-        std::cout << glm::vec3(car->getLocalToWorldMatrix() * glm::vec4(car->localTransform.position, 1)).z << std::endl;
 
         if (energy->localTransform.scale.x <= 0)
         {
