@@ -40,9 +40,10 @@ namespace our {
         rotation = glm::radians(data.value("rotation", glm::degrees(rotation)));
         scale    = data.value("scale", scale);
         // giving x-axis a random number to show at
-        if(type=='g'){
-            
+        if(type=='g'){// change the x-axis of energy objects
             position.x=(rand()%51)-25;
+        }else if (type=='o'){
+            position.x=(rand()%26)-12.5;
         }
     }
 

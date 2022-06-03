@@ -444,44 +444,27 @@
                     }
                 ]
             },
-            {
-                "position": [0, 2, -100],
-                "rotation": [0, 0, 0],
-                "name":"gas1",
-                "scale": [0.3, 0.3, 0.3],
-                "components": [
-                    {
-                        "type": "Mesh Renderer",
-                        "mesh": "gas",
-                        "material": "gas"
-                    },
-                    {
-                        "type": "Movement",
-                        "angularVelocity": [0, 90, 0]
-                    }
-                ]
-            },
            
             
             ///////////////// Wall
-            // {
-            //     "position": [0, 0, -150],
-            //     "rotation": [0, -90, 0],
-            //     "name":"wall0",
-            //     "scale": [0.5, 0.5, 0.5],
-            //     "components": [
-            //         {
-            //             "type": "Mesh Renderer",
-            //             "mesh": "wall",
-            //             "material": "wall2"
-            //         }
-            //     ]
-            // },
+            {
+                "position": [0, 0, -100],
+                "rotation": [0, -90, 0],
+                "name":"wall0",
+                "scale": [0.05, 0.5, 0.5],
+                "components": [
+                    {
+                        "type": "Mesh Renderer",
+                        "mesh": "wall",
+                        "material": "wall2"
+                    }
+                ]
+            },
             {
                 "position": [0, 4, -150],
                 "rotation": [0, 0, 0],
                 "name":"wall1",
-                "scale": [4, 4, 0.2],
+                "scale": [8, 4, 0.2],
                 "components": [
                     {
                         "type": "Mesh Renderer",
@@ -494,7 +477,7 @@
                 "position": [0, 4, -210],
                 "rotation": [0, 0, 0],
                 "name":"wall1",
-                "scale": [4, 4, 0.2],
+                "scale": [8, 4, 0.2],
                 "components": [
                     {
                         "type": "Mesh Renderer",
@@ -507,7 +490,7 @@
        
 
 
-            //////////// Bump 
+            // ------------ BUMP ----------------
             {
                 "position": [0, 0.2, -110],
                 "rotation": [90, 0, 0],
@@ -534,23 +517,7 @@
                     }
                 ]
             },
-            {
-                "position": [0, 0.2, -120],
-                "rotation": [-90, 0, 90],
-                "scale": [0.3, 0.3, 0.3],
-                "name":"can0",
-                "components": [
-                    {
-                        "type": "Mesh Renderer",
-                        "mesh": "can",
-                        "material": "can"
-                    },
-                    {
-                        "type": "Movement",
-                        "angularVelocity": [0, 90, 0]
-                    }
-                ]
-            },
+            // ------------ CAN ----------------
             {
                 "position": [0, 0.2, -220],
                 "rotation": [-90, 0, 90],

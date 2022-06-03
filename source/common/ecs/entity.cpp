@@ -29,7 +29,7 @@ namespace our {
         if(!data.is_object()) return;
         name = data.value("name", name);
         // in case gas/obstacle we send it's type to random it's position on x-axis
-        localTransform.deserialize(data,name.substr(0,3)=="gas" || name.substr(0,4)=="wall" || name.substr(0,4)=="bump" ? 'g':' ');
+        localTransform.deserialize(data,name.substr(0,3)=="gas" || name.substr(0,3)=="can" ? 'g': (name.substr(0,4)=="wall" || name.substr(0,4)=="bump")?'o':' ');
 
         if(data.contains("components")){
             if(const auto& components = data["components"]; components.is_array()){

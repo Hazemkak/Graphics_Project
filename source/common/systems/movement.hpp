@@ -26,12 +26,6 @@ namespace our
                 MovementComponent* movement = entity->getComponent<MovementComponent>();
                 // If the movement component exists
                 if(movement){
-                    // to stop the car at the end of the track
-                    // if(entity->name == "camera" && entity->localTransform.position.z <=-4010){
-                    //     entity->localTransform.position += glm::vec3(0,0,0);
-                    //     entity->localTransform.rotation += glm::vec3(0,0,0);
-                    //     continue;
-                    // }
                     
                     // Change the position and rotation based on the linear & angular velocity and delta time.
                     entity->localTransform.position += deltaTime * movement->linearVelocity;

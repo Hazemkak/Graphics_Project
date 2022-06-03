@@ -88,7 +88,7 @@ class Gamestate : public our::State
                 // Collision detected
                 if (obj->name.substr(0, 3) == "gas") //----------- GAS ------------//
                 {
-                    renderObjectAgain(stepForward, obj);
+                    renderObjectAgain(stepForward+500, obj);
                     energy->localTransform.scale.x += gasCollision;
                     std::cout << "collision gas" << std::endl;
                 }
@@ -106,7 +106,7 @@ class Gamestate : public our::State
                 }
                 else if (obj->name.substr(0, 3) == "can") //----------- Can ------------//
                 {
-                    renderObjectAgain(stepForward, obj);
+                    renderObjectAgain(stepForward+200, obj);
                     movement->linearVelocity.z *= 1.3;
                     std::cout << "can collision" << std::endl;
                 }
@@ -159,10 +159,10 @@ class Gamestate : public our::State
         }
 
         // decrement the car energy with time
-        if (camera->localTransform.position.z > -4010)
-        { // if the car finishes the game stop reducing the energy
-            energy->localTransform.scale.x -= deltaTime / 10.0;
-        }
+        // if (camera->localTransform.position.z > -4010)
+        // { // if the car finishes the game stop reducing the energy
+        energy->localTransform.scale.x -= deltaTime / 10.0;
+        // }
 
         for (const auto i : world->getEntities())
         {
