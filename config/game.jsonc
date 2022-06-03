@@ -381,7 +381,7 @@
                         "position": [10, 8, -10],
                         "rotation": [0, 0, 0],
                         "name":"energy",
-                        "scale": [15, 0.3, 1],
+                        "scale": [7, 0.3, 1],
                         "components": [
                             {
                                 "type": "Mesh Renderer",
@@ -410,9 +410,10 @@
                   
                 ]
             },
+       
             {
-                "position": [-22, 0, -300],
-                "rotation": [0, 0, 0],
+                "position": [22, 0, -100],
+                "rotation": [0, 180, 0],
                 "scale": [0.01, 0.01, 0.01],
                 "name":"lamp1",
                 "components": [
@@ -424,34 +425,7 @@
                   
                 ]
             },
-            {
-                "position": [22, 0, -100],
-                "rotation": [0, 180, 0],
-                "scale": [0.01, 0.01, 0.01],
-                "name":"lamp2",
-                "components": [
-                    {
-                        "type": "Mesh Renderer",
-                        "mesh": "lamp",
-                        "material": "moon"
-                    }
-                  
-                ]
-            },
-            {
-                "position": [22, 0, -300],
-                "rotation": [0, 180, 0],
-                "scale": [0.01, 0.01, 0.01],
-                "name":"lamp3",
-                "components": [
-                    {
-                        "type": "Mesh Renderer",
-                        "mesh": "lamp",
-                        "material": "moon"
-                    }
-                  
-                ]
-            },
+       
             ///////////////// Gas
             {
                 "position": [0, 2, -180],
@@ -535,9 +509,9 @@
 
             //////////// Bump 
             {
-                "position": [0, 0.2, -100],
-                "rotation": [-90, 0, 90],
-                "scale": [1, 12.5, 0.1],
+                "position": [0, 0.2, -110],
+                "rotation": [90, 0, 0],
+                "scale": [10,1, 0.2],
                 "name":"bump0",
                 "components": [
                     {
@@ -549,8 +523,8 @@
             },
             {
                 "position": [0, 0.2, -175],
-                "rotation": [-90, 0, 90],
-                "scale": [1, 12.5, 0.1],
+                "rotation": [90, 0, 0],
+                "scale": [10, 1, 0.2],
                 "name":"bump1",
                 "components": [
                     {
