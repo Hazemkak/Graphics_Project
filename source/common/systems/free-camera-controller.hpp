@@ -102,7 +102,7 @@ namespace our
             if(app->getKeyboard().isPressed(GLFW_KEY_D)){
                 if(position.x <= 23){ // to avoid the car from going off road
                     position += right * (deltaTime * current_sensitivity.x*4);
-                } 
+                }
             } 
             if(app->getKeyboard().isPressed(GLFW_KEY_A)){
                 if(position.x >= -23){ // to avoid the car from going off road
