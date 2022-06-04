@@ -59,8 +59,7 @@
                 "energy": "assets/textures/energy.png",
 
                 "bump":"assets/textures/bump.jpg",
-                "can":"assets/textures/can.jpg",
-                "black":"assets/models/black.png"
+                "can":"assets/textures/can.jpg"
                 
 
             },
@@ -77,6 +76,7 @@
                 "wall":"assets/models/wall.obj",
                 "can": "assets/models/can.obj"
                 
+
             },
             "samplers":{
                 "default":{},
@@ -125,8 +125,8 @@
 
                 "carmtl":
                         {
-                            "type": "lighted",
-                            "shader": "lighted",
+                            "type": "textured",
+                            "shader": "textured",
                             "pipelineState": {
                                 "faceCulling":{
                                     "enabled": false
@@ -136,12 +136,9 @@
                                 }
                             },
                             "tint": [1, 1, 1, 1],
-                            "albedo_texture":"car",
-                            "specular_texture":"car",
-                            "roughness_texture":"car",
-                            "emissive_texture":"black",
-                            "alpha_texture":"alpha",
-                            "ambientOcclusion_texture":"car"
+                            "texture": "car",
+                         
+                            "sampler": "default"
 
 
                         },
@@ -160,28 +157,6 @@
                         }
                     },
                     "tint": [0.45, 0.4, 0.5, 1]
-                },
-
-                // LIGHT ATEMPT CAN
-                "canLight":{
-                    "type": "lighted",
-                    "shader": "lighted",
-                    "pipelineState": {
-
-                        "faceCulling":{
-                            "enabled": false
-                        },
-                        "depthTesting":{
-                            "enabled": true
-                        }
-                    },
-
-                    "albedo_texture":"can",
-                    "specular_texture":"can",
-                    "roughness_texture":"can",
-                    "emissive_texture":"black",
-                    "alpha_texture":"alpha",
-                    "ambientOcclusion_texture":"can"
                 },
 
 
@@ -210,8 +185,8 @@
 
                 },
                 "road":{
-                    "type": "lighted",
-                    "shader": "lighted",
+                    "type": "textured",
+                    "shader": "textured",
                     "pipelineState": {
                         "faceCulling":{
                             "enabled": false
@@ -221,12 +196,8 @@
                         }
                     },
                     "tint": [1, 1, 1, 1],
-                    "albedo_texture":"road",
-                    "specular_texture":"road",
-                    "roughness_texture":"road",
-                    "emissive_texture":"black",
-                    "alpha_texture":"alpha",
-                    "ambientOcclusion_texture":"road"
+                    "texture": "road",
+                    "sampler": "default"
                  
 
                 },
@@ -248,8 +219,8 @@
 
                 },
                 "wall":{
-                    "type": "lighted",
-                    "shader": "lighted",
+                    "type": "textured",
+                    "shader": "textured",
                     "pipelineState": {
                         "faceCulling":{
                             "enabled": false
@@ -259,12 +230,8 @@
                         }
                     },
                     "tint": [1, 1, 1, 1],
-                    "albedo_texture":"wall",
-                    "specular_texture":"wall",
-                    "roughness_texture":"wall",
-                    "emissive_texture":"black",
-                    "alpha_texture":"alpha",
-                    "ambientOcclusion_texture":"wall"
+                    "texture": "wall",
+                    "sampler": "default"
                  
 
                 },
@@ -394,7 +361,7 @@
                     {
                         "position": [0, 8, -10],
                         "rotation": [45, 45, 0],
-                        "scale": [0.2, 0.2, 0.2],
+                        "scale": [1, 1, 1],
                         "components": [
                             {
                                 "type": "Mesh Renderer",
@@ -402,20 +369,11 @@
                                 "material": "moon"
                             },
                             {
-                                "type": "Movement"
-                                // "angularVelocity": [0, 90, 0]
-                            },
-                            {
-                                "type": "Light",
-                                "lightType": "DIRECTIONAL",
-                                "direction": [0,0,0],
-                                "diffuse": [0.8,0.8,0.8],
-                                "specular": [0.8,0.8,0.8],
-                                "attenuation": [0.001,0.001,0.001],
-                                "cone_angles":[0,360]
-                            }]
-                        }
-                    ,
+                                "type": "Movement",
+                                "angularVelocity": [0, 90, 0]
+                            }
+                        ]
+                    },
                     /////////// Energy
                     {
                         "position": [10, 8, -10],
@@ -429,17 +387,6 @@
                                 "material": "energy"
                             }
                         ]
-                    },
-                    ////////// Cam Light
-                    {
-                        "type": "Light",
-                        "lightType": "POINT",
-                        "position": [0,0,0],
-                        "direction": [0,0,0],
-                        "diffuse": [0.8,0.8,0.8],
-                        "specular": [0.8,0.8,0.8],
-                        "attenuation": [0.001,0.001,0.001],
-                        "cone_angles":[0,360]
                     }
                 ]
             },
@@ -458,30 +405,10 @@
                         "mesh": "lamp",
                         "material": "moon"
                     }
+                  
                 ]
             },
-            {
-                "position": [-22, 10, -100],
-                "rotation": [0, 0, 0],
-                "scale": [0.01, 0.01, 0.01],
-                "name":"lamp0Light",
-                "components": [
-                    {
-                        "type": "Mesh Renderer",
-                        "mesh": "sphere",
-                        "material": "moon"
-                    },{
-                        "type": "Light",
-                        "lightType": "POINT",
-                        "position": [0,0,0],
-                        "direction": [0,0,0],
-                        "diffuse": [0.6,0.6,0.6],
-                        "specular": [0.8,0.8,0.8],
-                        "attenuation": [0.001,0.001,0.001],
-                        "cone_angles":[0,45]
-                    }
-                ]
-            },
+       
             {
                 "position": [22, 0, -100],
                 "rotation": [0, 180, 0],
@@ -493,28 +420,7 @@
                         "mesh": "lamp",
                         "material": "moon"
                     }
-                ]
-            },
-            {
-                "position": [22, 10, -100],
-                "rotation": [0, 0, 0],
-                "scale": [0.01, 0.01, 0.01],
-                "name":"lamp1Light",
-                "components": [
-                    {
-                        "type": "Mesh Renderer",
-                        "mesh": "sphere",
-                        "material": "moon"
-                    },{
-                        "type": "Light",
-                        "lightType": "POINT",
-                        "position": [0,0,0],
-                        "direction": [0,0,0],
-                        "diffuse": [0.6,0.6,0.6],
-                        "specular": [0.8,0.8,0.8],
-                        "attenuation": [0.001,0.001,0.001],
-                        "cone_angles":[0,45]
-                    }
+                  
                 ]
             },
        
@@ -611,7 +517,7 @@
             },
             // ------------ CAN ----------------
             {
-                "position": [0, 0.2, -300],
+                "position": [0, 0.2, -220],
                 "rotation": [-90, 0, 90],
                 "scale": [0.3, 0.3, 0.3],
                 "name":"can1",
@@ -619,7 +525,7 @@
                     {
                         "type": "Mesh Renderer",
                         "mesh": "can",
-                        "material": "canLight"
+                        "material": "can"
                     },
                     {
                         "type": "Movement",
@@ -627,6 +533,9 @@
                     }
                 ]
             },
+
+     
+
 
             //////////////// Road
             {
