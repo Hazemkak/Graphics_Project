@@ -123,9 +123,13 @@ class Gamestate : public our::State
             {
                 renderObjectAgain(stepForward, obj);
             }
-            else
+            else if (obj->name.substr(0, 4) == "lamp" && (abs(objPos.z) < abs(carPos.z) - 100))
             {
-                renderObjectAgain(100, obj);
+                renderObjectAgain(200, obj);
+            }
+            else if (obj->name.substr(0, 4) == "lamm" && (abs(objPos.z) < abs(carPos.z) - 100))
+            {
+                renderObjectAgain(200, obj);
             }
         }
     }

@@ -48,7 +48,6 @@ int main(int argc, char** argv) {
     app.registerState<Playstate>("main");
     app.registerState<Gamestate>("game");
     app.registerState<MenuState>("menu");
-    std::cout<<"helooo";
     app.registerState<EndGameState>("end");
     app.registerState<MeshTestState>("mesh-test");
     app.registerState<TransformTestState>("transform-test");

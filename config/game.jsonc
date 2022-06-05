@@ -231,8 +231,8 @@
 
                 },
                 "gas":{
-                    "type": "textured",
-                    "shader": "textured",
+                    "type": "lighted",
+                    "shader": "lighted",
                     "pipelineState": {
                         "faceCulling":{
                             "enabled": false
@@ -242,8 +242,12 @@
                         }
                     },
                     "tint": [1, 1, 1, 1],
-                    "texture": "gas",
-                    "sampler": "default"
+                    "albedo_texture":"gas",
+                    "specular_texture":"gas",
+                    "roughness_texture":"gas",
+                    "emissive_texture":"black",
+                    "alpha_texture":"alpha",
+                    "ambientOcclusion_texture":"gas"
                  
 
                 },
@@ -500,6 +504,77 @@
                 "rotation": [0, 0, 0],
                 "scale": [0.01, 0.01, 0.01],
                 "name":"lamp1Light",
+                "components": [
+                    {
+                        "type": "Mesh Renderer",
+                        "mesh": "sphere",
+                        "material": "moon"
+                    },{
+                        "type": "Light",
+                        "lightType": "POINT",
+                        "position": [0,0,0],
+                        "direction": [0,0,0],
+                        "diffuse": [0.6,0.6,0.6],
+                        "specular": [0.8,0.8,0.8],
+                        "attenuation": [0.001,0.001,0.001],
+                        "cone_angles":[0,45]
+                    }
+                ]
+            },
+            // second row
+            {
+                "position": [-22, 0, -200],
+                "rotation": [0, 0, 0],
+                "scale": [0.01, 0.01, 0.01],
+                "name":"lamm0",
+                "components": [
+                    {
+                        "type": "Mesh Renderer",
+                        "mesh": "lamp",
+                        "material": "moon"
+                    }
+                ]
+            },
+            {
+                "position": [-22, 10, -200],
+                "rotation": [0, 0, 0],
+                "scale": [0.01, 0.01, 0.01],
+                "name":"lamm0Light",
+                "components": [
+                    {
+                        "type": "Mesh Renderer",
+                        "mesh": "sphere",
+                        "material": "moon"
+                    },{
+                        "type": "Light",
+                        "lightType": "POINT",
+                        "position": [0,0,0],
+                        "direction": [0,0,0],
+                        "diffuse": [0.6,0.6,0.6],
+                        "specular": [0.8,0.8,0.8],
+                        "attenuation": [0.001,0.001,0.001],
+                        "cone_angles":[0,45]
+                    }
+                ]
+            },
+            {
+                "position": [22, 0, -200],
+                "rotation": [0, 180, 0],
+                "scale": [0.01, 0.01, 0.01],
+                "name":"lamm1",
+                "components": [
+                    {
+                        "type": "Mesh Renderer",
+                        "mesh": "lamp",
+                        "material": "moon"
+                    }
+                ]
+            },
+            {
+                "position": [22, 10, -200],
+                "rotation": [0, 0, 0],
+                "scale": [0.01, 0.01, 0.01],
+                "name":"lamm1Light",
                 "components": [
                     {
                         "type": "Mesh Renderer",
