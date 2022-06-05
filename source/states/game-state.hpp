@@ -28,13 +28,18 @@ class Gamestate : public our::State
         {
             our::deserializeAllAssets(config["assets"]);
         }
+
+
         // If we have a world in the scene config, we use it to populate our world
         if (config.contains("world"))
         {
             world.deserialize(config["world"]);
         }
+
         // We initialize the camera controller system since it needs a pointer to the app
         cameraController.enter(getApp());
+
+
         // Then we initialize the renderer
         auto size = getApp()->getFrameBufferSize();
         renderer.initialize(size, config["renderer"]);
@@ -46,8 +51,8 @@ class Gamestate : public our::State
         // Here, we just run a bunch of systems to control the world logic
         movementSystem.update(&world, (float)deltaTime);
         cameraController.update(&world, (float)deltaTime);
-        // And finally we use the renderer system to draw the scene
 
+        // And finally we use the renderer system to draw the scene
         renderer.render(&world);
         logic(&world, deltaTime);
     }
@@ -172,6 +177,7 @@ class Gamestate : public our::State
         {
             energy->localTransform.scale.x = 0;
             // go to game over
+            world->clear();
             getApp()->changeState("end");
         }
         else if (energy->localTransform.scale.x > MAX_SCALE)
@@ -181,6 +187,7 @@ class Gamestate : public our::State
 
         if (getApp()->getKeyboard().justPressed(GLFW_KEY_ESCAPE))
         {
+            world->clear();
             getApp()->changeState("end");
         }
     }

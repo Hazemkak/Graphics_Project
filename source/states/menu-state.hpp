@@ -20,6 +20,7 @@ class MenuState : public our::State
     {
         // First of all, we get the scene configuration from the app config
         auto &config = getApp()->getConfig()["menu-scene"];
+
         // If we have assets in the scene config, we deserialize them
         if (config.contains("assets"))
         {
@@ -54,7 +55,7 @@ class MenuState : public our::State
         // Don't forget to destroy the renderer
         renderer.destroy();
         // On exit, we call exit for the camera controller system to make sure that the mouse is unlocked
-
+        
         // and we delete all the loaded assets to free memory on the RAM and the VRAM
         our::clearAllAssets();
     }

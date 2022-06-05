@@ -59,7 +59,8 @@
                 "energy": "assets/textures/energy.png",
 
                 "bump":"assets/textures/bump.jpg",
-                "can":"assets/textures/can.jpg"
+                "can":"assets/textures/can.jpg",
+                "black":"assets/models/black.png"
                 
 
             },
@@ -76,7 +77,6 @@
                 "wall":"assets/models/wall.obj",
                 "can": "assets/models/can.obj"
                 
-
             },
             "samplers":{
                 "default":{},
@@ -125,8 +125,8 @@
 
                 "carmtl":
                         {
-                            "type": "textured",
-                            "shader": "textured",
+                            "type": "lighted",
+                            "shader": "lighted",
                             "pipelineState": {
                                 "faceCulling":{
                                     "enabled": false
@@ -136,9 +136,12 @@
                                 }
                             },
                             "tint": [1, 1, 1, 1],
-                            "texture": "car",
-                         
-                            "sampler": "default"
+                            "albedo_texture":"car",
+                            "specular_texture":"car",
+                            "roughness_texture":"car",
+                            "emissive_texture":"black",
+                            "alpha_texture":"alpha",
+                            "ambientOcclusion_texture":"car"
 
 
                         },
@@ -157,6 +160,28 @@
                         }
                     },
                     "tint": [0.45, 0.4, 0.5, 1]
+                },
+
+                // LIGHT ATEMPT CAN
+                "canLight":{
+                    "type": "lighted",
+                    "shader": "lighted",
+                    "pipelineState": {
+
+                        "faceCulling":{
+                            "enabled": false
+                        },
+                        "depthTesting":{
+                            "enabled": true
+                        }
+                    },
+
+                    "albedo_texture":"can",
+                    "specular_texture":"can",
+                    "roughness_texture":"can",
+                    "emissive_texture":"black",
+                    "alpha_texture":"alpha",
+                    "ambientOcclusion_texture":"can"
                 },
 
 
@@ -185,8 +210,8 @@
 
                 },
                 "road":{
-                    "type": "textured",
-                    "shader": "textured",
+                    "type": "lighted",
+                    "shader": "lighted",
                     "pipelineState": {
                         "faceCulling":{
                             "enabled": false
@@ -196,8 +221,12 @@
                         }
                     },
                     "tint": [1, 1, 1, 1],
-                    "texture": "road",
-                    "sampler": "default"
+                    "albedo_texture":"road",
+                    "specular_texture":"road",
+                    "roughness_texture":"road",
+                    "emissive_texture":"black",
+                    "alpha_texture":"alpha",
+                    "ambientOcclusion_texture":"road"
                  
 
                 },
@@ -219,8 +248,8 @@
 
                 },
                 "wall":{
-                    "type": "textured",
-                    "shader": "textured",
+                    "type": "lighted",
+                    "shader": "lighted",
                     "pipelineState": {
                         "faceCulling":{
                             "enabled": false
@@ -230,8 +259,12 @@
                         }
                     },
                     "tint": [1, 1, 1, 1],
-                    "texture": "wall",
-                    "sampler": "default"
+                    "albedo_texture":"wall",
+                    "specular_texture":"wall",
+                    "roughness_texture":"wall",
+                    "emissive_texture":"black",
+                    "alpha_texture":"alpha",
+                    "ambientOcclusion_texture":"wall"
                  
 
                 },
@@ -361,7 +394,7 @@
                     {
                         "position": [0, 8, -10],
                         "rotation": [45, 45, 0],
-                        "scale": [1, 1, 1],
+                        "scale": [0.2, 0.2, 0.2],
                         "components": [
                             {
                                 "type": "Mesh Renderer",
@@ -369,11 +402,20 @@
                                 "material": "moon"
                             },
                             {
-                                "type": "Movement",
-                                "angularVelocity": [0, 90, 0]
-                            }
-                        ]
-                    },
+                                "type": "Movement"
+                                // "angularVelocity": [0, 90, 0]
+                            },
+                            {
+                                "type": "Light",
+                                "lightType": "DIRECTIONAL",
+                                "direction": [0,0,0],
+                                "diffuse": [0.8,0.8,0.8],
+                                "specular": [0.8,0.8,0.8],
+                                "attenuation": [0.001,0.001,0.001],
+                                "cone_angles":[0,360]
+                            }]
+                        }
+                    ,
                     /////////// Energy
                     {
                         "position": [10, 8, -10],
@@ -387,6 +429,17 @@
                                 "material": "energy"
                             }
                         ]
+                    },
+                    ////////// Cam Light
+                    {
+                        "type": "Light",
+                        "lightType": "POINT",
+                        "position": [0,0,0],
+                        "direction": [0,0,0],
+                        "diffuse": [0.8,0.8,0.8],
+                        "specular": [0.8,0.8,0.8],
+                        "attenuation": [0.001,0.001,0.001],
+                        "cone_angles":[0,360]
                     }
                 ]
             },
@@ -405,10 +458,30 @@
                         "mesh": "lamp",
                         "material": "moon"
                     }
-                  
                 ]
             },
-       
+            {
+                "position": [-22, 10, -100],
+                "rotation": [0, 0, 0],
+                "scale": [0.01, 0.01, 0.01],
+                "name":"lamp0Light",
+                "components": [
+                    {
+                        "type": "Mesh Renderer",
+                        "mesh": "sphere",
+                        "material": "moon"
+                    },{
+                        "type": "Light",
+                        "lightType": "POINT",
+                        "position": [0,0,0],
+                        "direction": [0,0,0],
+                        "diffuse": [0.6,0.6,0.6],
+                        "specular": [0.8,0.8,0.8],
+                        "attenuation": [0.001,0.001,0.001],
+                        "cone_angles":[0,45]
+                    }
+                ]
+            },
             {
                 "position": [22, 0, -100],
                 "rotation": [0, 180, 0],
@@ -420,7 +493,28 @@
                         "mesh": "lamp",
                         "material": "moon"
                     }
-                  
+                ]
+            },
+            {
+                "position": [22, 10, -100],
+                "rotation": [0, 0, 0],
+                "scale": [0.01, 0.01, 0.01],
+                "name":"lamp1Light",
+                "components": [
+                    {
+                        "type": "Mesh Renderer",
+                        "mesh": "sphere",
+                        "material": "moon"
+                    },{
+                        "type": "Light",
+                        "lightType": "POINT",
+                        "position": [0,0,0],
+                        "direction": [0,0,0],
+                        "diffuse": [0.6,0.6,0.6],
+                        "specular": [0.8,0.8,0.8],
+                        "attenuation": [0.001,0.001,0.001],
+                        "cone_angles":[0,45]
+                    }
                 ]
             },
        
@@ -517,7 +611,7 @@
             },
             // ------------ CAN ----------------
             {
-                "position": [0, 0.2, -220],
+                "position": [0, 0.2, -300],
                 "rotation": [-90, 0, 90],
                 "scale": [0.3, 0.3, 0.3],
                 "name":"can1",
@@ -525,7 +619,7 @@
                     {
                         "type": "Mesh Renderer",
                         "mesh": "can",
-                        "material": "can"
+                        "material": "canLight"
                     },
                     {
                         "type": "Movement",
@@ -533,9 +627,6 @@
                     }
                 ]
             },
-
-     
-
 
             //////////////// Road
             {
@@ -834,7 +925,10 @@
                 "wood": "assets/textures/wood.jpg",
                 "glass": "assets/textures/glass-panels.png",
                 "monkey": "assets/textures/monkey.png",
-
+                "EXIT": "assets/textures/EXIT.jpg",
+                "GAMEOVER": "assets/textures/GAMEOVER.jpg",
+                "black": "assets/textures/black.jpg",
+                "REPLAY": "assets/textures/REPLAY.jpg",
                 "albedo":"assets/textures/albedo.jpg",
                 "emissive": "assets/textures/emissive.jpg",
                 "roughness": "assets/textures/roughness.jpg",
@@ -847,7 +941,6 @@
                 "plane": "assets/models/plane.obj",
                 "sphere": "assets/models/sphere.obj",
                 "suzanne": "assets/models/Suzanne.obj"
-
             },
             "samplers":{
                 "default":{},
@@ -889,7 +982,67 @@
                     "tint": [1, 1, 1, 1],
                     "texture": "moon",
                     "sampler": "default"
+                },
+                "black":{
+                    "type": "textured",
+                    "shader": "textured",
+                    "pipelineState": {
+                        "faceCulling":{
+                            "enabled": false
+                        },
+                        "depthTesting":{
+                            "enabled": true
+                        }
+                    },
+                    "tint": [1, 1, 1, 1],
+                    "texture": "black",
+                    "sampler": "default"
+                },
+                "GAMEOVER":{
+                    "type": "textured",
+                    "shader": "textured",
+                    "pipelineState": {
+                        "faceCulling":{
+                            "enabled": false
+                        },
+                        "depthTesting":{
+                            "enabled": true
+                        }
+                    },
+                    "tint": [1, 1, 1, 1],
+                    "texture": "GAMEOVER",
+                    "sampler": "default"
+                },
+                "REPLAY":{
+                    "type": "textured",
+                    "shader": "textured",
+                    "pipelineState": {
+                        "faceCulling":{
+                            "enabled": false
+                        },
+                        "depthTesting":{
+                            "enabled": true
+                        }
+                    },
+                    "tint": [1, 1, 1, 1],
+                    "texture": "REPLAY",
+                    "sampler": "default"
+                },"EXIT":{
+                    "type": "textured",
+                    "shader": "textured",
+                    "pipelineState": {
+                        "faceCulling":{
+                            "enabled": false
+                        },
+                        "depthTesting":{
+                            "enabled": true
+                        }
+                    },
+                    "tint": [1, 1, 1, 1],
+                    "texture": "EXIT",
+                    "sampler": "default"
                 }
+
             }
         },
         "world":[
@@ -915,38 +1068,66 @@
 
 
                     }
-                
-
-
-                
                    
                 ],
                 "children": [
-
-                ]
-            },
-            {
-                "position": [0, -2, 0],
-                "rotation": [-45, 0, 0],
-                "scale": [3, 3, 3],
-                "components": [
                     {
-                        "type": "Mesh Renderer",
-                        "mesh": "suzanne",
-                        "material": "monkey"
-                    },
-                    {
-                        "type": "Movement",
-                        "linearVelocity": [0, 0.0, 0],
-                        "angularVelocity": [0, 0, 0]
+                        "position": [0, -0.2, -8],
+                        "rotation": [0, 0, 0],
+                        "scale": [15, 10, -1],
+                        "components": [
+                            {
+                                "type": "Mesh Renderer",
+                                "mesh": "plane",
+                                "material": "black"
+                            }
+                          
+                        ]
+                    },{
+                        "position": [0, 3, -7],
+                        "rotation": [0, 0, 0],
+                        "scale": [4, 4, 1],
+                        "name":"GAMEOVER",
+                        "components": [
+                            {
+                                "type": "Mesh Renderer",
+                                "mesh": "plane",
+                                "material": "GAMEOVER"
+                            }
+                          
+                        ]
+                    },{
+                        "position": [5, -3, -7],
+                        "rotation": [0, 0, 0],
+                        "scale": [1, 1, 1],
+                        "name":"EXIT",
+                        "components": [
+                            {
+                                "type": "Mesh Renderer",
+                                "mesh": "plane",
+                                "material": "EXIT"
+                            }
+                        ]
+                    },{
+                        "position": [-5, -3, -7],
+                        "rotation": [0, 0, 0],
+                        "scale": [2, 2, 1],
+                        "name":"REPLAY",
+                        "components": [
+                            {
+                                "type": "Mesh Renderer",
+                                "mesh": "plane",
+                                "material": "REPLAY"
+                            }
+                          
+                        ]
                     }
-                  
                 ]
             },
             {
                 "position": [0, 10, 0],
                 "rotation": [45, 45, 0],
-                "scale": [5, 5, 5],
+                "scale": [0.2, 0.2, 0.2],
                 "components": [
                     {
                         "type": "Mesh Renderer",
