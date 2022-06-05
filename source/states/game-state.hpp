@@ -121,12 +121,11 @@ class Gamestate : public our::State
 
             if (obj->name.substr(0, 3) != "lam")
             {
-                obj->localTransform.position.x = (rand() % 51) - 25; // to change x-axis pos
                 renderObjectAgain(stepForward, obj);
             }
             else
             {
-                renderObjectAgain(stepForward, obj);
+                renderObjectAgain(100, obj);
             }
         }
     }
